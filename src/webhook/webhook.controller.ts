@@ -18,6 +18,8 @@ export class WebhookController {
       return 'Invalid signature';
     }
 
+    this.logger.log(payload);
+
     this.logger.log(`Evento recebido: ${payload.action}`);
     this.processEvent(payload);
 
