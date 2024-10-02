@@ -18,10 +18,7 @@ export class WebhookController {
       return 'Invalid signature';
     }
 
-    this.logger.log(payload);
-
-    this.logger.log(`Evento recebido: ${payload.action}`);
-    this.processEvent(payload);
+    this.logger.log(`Evento recebido: ${JSON.stringify(payload)}`);
 
     return 'Webhook recebido com sucesso!';
   }
@@ -36,18 +33,5 @@ export class WebhookController {
       Buffer.from(signature || ''),
       Buffer.from(computedSignature),
     );
-  }
-
-  private processEvent(payload: any) {
-    switch (payload.action) {
-      case 'opened':
-        this.logger.log(`Issue aberta: ${payload.issue.title}`);
-        break;
-      case 'closed':
-        this.logger.log(`Issue fechada: ${payload.issue.title}`);
-        break;
-      default:
-        this.logger.log(`Evento desconhecido: ${payload.action}`);
-    }
   }
 }
